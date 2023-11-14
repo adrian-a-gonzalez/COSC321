@@ -34,7 +34,7 @@
         istore GUESS_digit_1
         istore GUESS_digit_2
 
-    player_1: // Print "Player 1, input a number to guess: "
+    player_1: // Print "Player 1(0-99): "
         bipush 'P'
         out
         bipush 'l'
@@ -128,7 +128,7 @@
         iadd
         istore NUM
     
-    player_2: // Print "Player 2, guess a number: "
+    player_2: // Print "Player 2: "
         bipush 5
         istore guesses
 
@@ -217,7 +217,7 @@
         bipush 0x30
         isub // Check if the second digit is less than 0
         iflt INVALID
-        iinc guesses -1
+        //iinc guesses -1
 
     DO_MATH_2: // Will turn the characters into numbers for GUESS
         iload GUESS_digit_1
@@ -351,6 +351,7 @@
 
 
     CORRECT: // Print "You win! You took # guesses."
+        iinc guesses -1
         ldc_w NEWLINE
         out
         bipush 'Y'
@@ -574,6 +575,8 @@
         dup
         dup
         ifeq reread_5
+        out
+        ldc_w NEWLINE
         out
         bipush 'y'
         isub
