@@ -51,6 +51,18 @@
         out
         bipush '1'
         out
+        bipush '('
+        out
+        bipush '0'
+        out
+        bipush '-'
+        out
+        bipush '9'
+        out
+        bipush '9'
+        out
+        bipush ')'
+        out
         bipush ':'
         out
         ldc_w SPACE
@@ -205,7 +217,7 @@
         bipush 0x30
         isub // Check if the second digit is less than 0
         iflt INVALID
-        iinc GUESS -1
+        iinc guesses -1
 
     DO_MATH_2: // Will turn the characters into numbers for GUESS
         iload GUESS_digit_1
@@ -557,6 +569,19 @@
         ldc_w SPACE
         out
 
+    PLAY_AGAIN_IN:
+        in
+        dup
+        dup
+        ifeq reread_5
+        out
+        bipush 'y'
+        isub
+        ifeq play
+        goto DONE
+    reread_5:
+        pop
+        goto PLAY_AGAIN_IN
 
     DONE:
         halt
