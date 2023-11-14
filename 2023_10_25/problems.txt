@@ -1,0 +1,4 @@
+Problem 5
+
+for (i = 0; i < 5; i++)
+    x += i;

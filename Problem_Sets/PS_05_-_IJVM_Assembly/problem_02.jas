@@ -1,0 +1,74 @@
+.main
+
+    .var
+        x
+        a
+        b
+        new_b
+        c
+        counter
+    .end-var
+
+    bipush 3
+    istore x
+
+    bipush 2
+    istore a
+    bipush 3
+    istore b
+    bipush 0
+    istore new_b
+    bipush 0
+    istore c
+    bipush 4
+    istore counter
+
+    switch:
+        iload x
+        bipush 1
+        isub
+        ifeq case_1
+
+        iload x
+        bipush 2
+        isub
+        ifeq case_2
+
+        goto default
+
+    case_1:
+        iload a
+        bipush 2
+        iadd
+        istore a
+        goto done
+
+    case_2:
+        iload counter
+        bipush 1
+        isub
+        iflt done_case_2
+        
+        iload b
+        iload new_b
+        iadd
+        istore new_b
+        iinc counter -1
+        goto case_2
+
+    done_case_2:
+        iload new_b
+        istore b
+        goto done
+
+    default:
+        iload a
+        iload b
+        isub
+        istore c
+        goto 
+
+    done:
+        halt
+
+.end-main

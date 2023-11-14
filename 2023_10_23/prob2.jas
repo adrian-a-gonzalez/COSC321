@@ -1,0 +1,29 @@
+.main
+
+    .var
+        x
+        y
+    .end-var
+
+    bipush -3
+    istore y
+    bipush 5
+    iload y
+    dup
+    iadd
+    iadd
+    dup
+    istore x
+    iflt less
+    goto done
+
+    less:
+
+    iload x
+    bipush 1
+    isub
+    istore y
+
+    done: halt
+
+.end-main

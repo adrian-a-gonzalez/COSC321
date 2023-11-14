@@ -1,0 +1,16 @@
+.main
+
+        .var
+            x
+            y
+        .end-var
+
+        iload x
+        bipush 1
+        iand
+        ifeq even
+odd:    goto done
+even:   iinc y +1
+done:   halt
+
+.end-main

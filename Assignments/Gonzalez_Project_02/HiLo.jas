@@ -1,0 +1,177 @@
+.constant
+    SPACE 32
+    NEWLINE 10
+.end-constant
+
+.main
+
+    .var
+        NUM
+        GUESS
+        guesses
+    .end-var
+
+    bipush 0
+    istore guesses
+
+    play:
+        goto player_1
+
+    player_1: // Print "Player 1, input a number to guess: "
+        bipush 'P'
+        out
+        bipush 'l'
+        out
+        bipush 'a'
+        out
+        bipush 'y'
+        out
+        bipush 'e'
+        out
+        bipush 'r'
+        out
+        ldc_w SPACE
+        out
+        bipush '1'
+        out
+        bipush ','
+        out
+        ldc_w SPACE
+        out
+        bipush 'i'
+        out
+        bipush 'n'
+        out
+        bipush 'p'
+        out
+        bipush 'u'
+        out
+        bipush 't'
+        out
+        ldc_w SPACE
+        out
+        bipush 'a'
+        out
+        ldc_w SPACE
+        out
+        bipush 'n'
+        out
+        bipush 'u'
+        out
+        bipush 'm'
+        out
+        bipush 'b'
+        out
+        bipush 'e'
+        out
+        bipush 'r'
+        out
+        ldc_w SPACE
+        out
+        bipush 't'
+        out
+        bipush 'o'
+        out
+        ldc_w SPACE
+        out
+        bipush 'g'
+        out
+        bipush 'u'
+        out
+        bipush 'e'
+        out
+        bipush 's'
+        out
+        bipush 's'
+        out
+        bipush ':'
+        out
+        ldc_w SPACE
+        out
+    
+    getch_1:
+        in
+        dup
+        ifeq reread_1
+        out
+        goto player_2
+    reread_1:
+        pop
+        goto getch_1
+    
+    player_2: // Print "Player 2, guess a number: "
+        bipush 'P'
+        out
+        bipush 'l'
+        out
+        bipush 'a'
+        out
+        bipush 'y'
+        out
+        bipush 'e'
+        out
+        bipush 'r'
+        out
+        ldc_w SPACE
+        out
+        bipush '1'
+        out
+        bipush ','
+        out
+        ldc_w SPACE
+        out
+        bipush 'i'
+        out
+        bipush 'n'
+        out
+        bipush 'p'
+        out
+        bipush 'u'
+        out
+        bipush 't'
+        out
+        ldc_w SPACE
+        out
+        bipush 'a'
+        out
+        ldc_w SPACE
+        out
+        bipush 'n'
+        out
+        bipush 'u'
+        out
+        bipush 'm'
+        out
+        bipush 'b'
+        out
+        bipush 'e'
+        out
+        bipush 'r'
+        out
+        ldc_w SPACE
+        out
+        bipush 't'
+        out
+        bipush 'o'
+        out
+        ldc_w SPACE
+        out
+        bipush 'g'
+        out
+        bipush 'u'
+        out
+        bipush 'e'
+        out
+        bipush 's'
+        out
+        bipush 's'
+        out
+        bipush ':'
+        out
+        ldc_w SPACE
+        out
+
+
+        halt
+
+.end-main

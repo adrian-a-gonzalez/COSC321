@@ -1,0 +1,33 @@
+.main
+
+    .var
+    i
+    x
+    .end-var
+
+    bipush 0
+    iload i
+    bipush 0
+    iload x
+
+    for_loop:
+        iload i
+        bipush 5
+        isub
+        iflt not_done
+        goto done
+
+    not_done:
+        iload i
+        iload x
+        iadd
+        istore x
+        iinc i +1
+        goto for_loop
+
+    done:
+        iload x
+        istore x
+        halt
+
+.end-main
