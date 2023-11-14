@@ -1,0 +1,47 @@
+INPUT:
+
+
+9
+104322741
+y123
+48a412y2323n
+
+
+
+OUTPUT:
+
+
+Player 1(0-99): 9
+
+Player 2: 10
+Too big.
+43
+Too big.
+22
+Too big.
+74
+Too big.
+1
+
+Too small.
+
+Game over. Player 1 wins. Correct answer is 9.
+
+Play again?(y/n): y
+Player 1(0-99): 12
+Player 2: 3
+
+Too small.
+48
+Too big.
+a4
+Invalid input.
+12
+You win! You took 4 guesses.
+
+Play again?(y/n): y
+Player 1(0-99): 23
+Player 2: 23
+You win! You took 1 guesses.
+
+Play again?(y/n): n
