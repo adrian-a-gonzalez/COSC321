@@ -9,13 +9,30 @@
         NUM
         GUESS
         guesses
+        NUM_digit_1
+        NUM_digit_1_counter
+        NUM_digit_2
+        GUESS_digit_1
+        GUESS_digit_2
     .end-var
 
-    bipush 0
-    istore guesses
-
     play:
-        goto player_1
+        bipush 0
+        dup
+        dup
+        dup
+        dup
+        dup
+        dup
+        dup
+        istore NUM
+        istore GUESS
+        istore guesses
+        istore NUM_digit_1
+        istore NUM_digit_1_counter
+        istore NUM_digit_2
+        istore GUESS_digit_1
+        istore GUESS_digit_2
 
     player_1: // Print "Player 1, input a number to guess: "
         bipush 'P'
@@ -34,7 +51,272 @@
         out
         bipush '1'
         out
-        bipush ','
+        bipush ':'
+        out
+        ldc_w SPACE
+        out
+    
+    NUM_1:
+        in
+        dup
+        dup
+        ifeq reread_1
+        out
+        istore NUM_digit_1
+        goto NUM_2
+    reread_1:
+        istore NUM_digit_1
+        goto NUM_1
+
+    NUM_2:
+        in
+        dup
+        dup
+        ifeq reread_2
+        out
+        istore NUM_digit_2
+        goto DO_MATH_1
+    reread_2:
+        istore NUM_digit_2
+        goto NUM_2
+
+    DO_MATH_1: // Will turn the characters into numbers for NUM
+        iload NUM_digit_1
+        bipush 0x30
+        isub
+        dup
+        istore NUM_digit_1
+        istore NUM_digit_1_counter
+
+    DM1_Loop_1:
+        iload NUM_digit_2
+        bipush 10
+        isub
+        ifeq DM1_Loop_1_2
+
+        iload NUM // Double digit 10s digit
+        bipush 10
+        iadd
+        istore NUM
+        iinc NUM_digit_1_counter -1
+        iload NUM_digit_1_counter
+        ifeq DM1_Loop_2
+        goto DM1_Loop_1
+
+    DM1_Loop_1_2: // Single digit location
+        iload NUM_digit_1
+        istore NUM
+        goto player_2
+
+    DM1_Loop_2: // Double digit 1s digit
+        iload NUM_digit_2
+        bipush 0x30
+        isub
+        iload NUM
+        iadd
+        istore NUM
+    
+    player_2: // Print "Player 2, guess a number: "
+        bipush 5
+        istore guesses
+
+        ldc_w NEWLINE
+        out
+        bipush 'P'
+        out
+        bipush 'l'
+        out
+        bipush 'a'
+        out
+        bipush 'y'
+        out
+        bipush 'e'
+        out
+        bipush 'r'
+        out
+        ldc_w SPACE
+        out
+        bipush '2'
+        out
+        bipush ':'
+        out
+        ldc_w SPACE
+        out
+
+    COUNT_GUESSES:
+        bipush 0
+        dup
+        dup
+        istore GUESS_digit_1
+        istore GUESS_digit_2
+        istore GUESS
+        iload guesses
+        ifeq LOST
+
+    GUESS_1:
+        in
+        dup
+        dup
+        ifeq reread_3
+        out
+        istore GUESS_digit_1
+        goto GUESS_2
+    reread_3:
+        istore GUESS_digit_1
+        goto GUESS_1
+
+    GUESS_2:
+        in
+        dup
+        dup
+        ifeq reread_4
+        out
+        istore GUESS_digit_2
+        goto INT_PARSE_1
+    reread_4:
+        istore GUESS_digit_2
+        goto GUESS_2
+
+    INT_PARSE_1:
+        bipush 0x3A
+        iload GUESS_digit_1
+        isub // Check if the first digit is greater than 9
+        iflt INVALID
+
+    INT_PARSE_1_2:
+        iload GUESS_digit_1
+        bipush 0x30
+        isub // Check if the first digit is less than 0
+        iflt INVALID
+
+    INT_PARSE_2:
+        bipush 0x3A
+        iload GUESS_digit_2
+        isub // Check if the second digit is greater than 9
+        iflt INVALID
+    
+    INT_PARSE_2_1:
+        iload GUESS_digit_2
+        bipush 10
+        isub // Check if the guess is single digit
+        ifeq DO_MATH_2
+
+        iload GUESS_digit_2
+        bipush 0x30
+        isub // Check if the second digit is less than 0
+        iflt INVALID
+        iinc GUESS -1
+
+    DO_MATH_2: // Will turn the characters into numbers for GUESS
+        iload GUESS_digit_1
+        bipush 0x30
+        isub
+        istore GUESS_digit_1
+
+    DM2_Loop_1:
+        iload GUESS_digit_2
+        bipush 10
+        isub
+        ifeq DM2_Loop_1_2
+
+        iload GUESS // Double digit 10s digit
+        bipush 10
+        iadd
+        istore GUESS
+        iinc GUESS_digit_1 -1
+        iload GUESS_digit_1
+        ifeq DM2_Loop_2
+        goto DM2_Loop_1
+
+    DM2_Loop_1_2: // Single digit location
+        iload GUESS_digit_1
+        istore GUESS
+        goto GUESS_CHECKER
+
+    DM2_Loop_2: // Double digit 1s digit
+        iload GUESS_digit_2
+        bipush 0x30
+        isub
+        iload GUESS
+        iadd
+        istore GUESS
+
+    GUESS_CHECKER:
+        iload GUESS
+        iload NUM
+        isub // Check to see if GUESS is correct
+        dup
+        ifeq CORRECT
+        iflt LESS_THAN
+
+    GREATER_THAN: // Print "Too big."
+        ldc_w NEWLINE
+        out
+        bipush 'T'
+        out
+        bipush 'o'
+        out
+        bipush 'o'
+        out
+        ldc_w SPACE
+        out
+        bipush 'b'
+        out
+        bipush 'i'
+        out
+        bipush 'g'
+        out
+        bipush '.'
+        out
+        ldc_w NEWLINE
+        out
+        iinc guesses -1
+        goto COUNT_GUESSES
+
+    LESS_THAN: // Print "Too small."
+        ldc_w NEWLINE
+        out
+        bipush 'T'
+        out
+        bipush 'o'
+        out
+        bipush 'o'
+        out
+        ldc_w SPACE
+        out
+        bipush 's'
+        out
+        bipush 'm'
+        out
+        bipush 'a'
+        out
+        bipush 'l'
+        out
+        bipush 'l'
+        out
+        bipush '.'
+        out
+        ldc_w NEWLINE
+        out
+        iinc guesses -1
+        goto COUNT_GUESSES
+
+    INVALID: // Print "Invalid input."
+        ldc_w NEWLINE
+        out
+        bipush 'I'
+        out
+        bipush 'n'
+        out
+        bipush 'v'
+        out
+        bipush 'a'
+        out
+        bipush 'l'
+        out
+        bipush 'i'
+        out
+        bipush 'd'
         out
         ldc_w SPACE
         out
@@ -48,23 +330,40 @@
         out
         bipush 't'
         out
-        ldc_w SPACE
+        bipush '.'
         out
-        bipush 'a'
+        ldc_w NEWLINE
         out
-        ldc_w SPACE
+        iinc guesses -1
+        goto COUNT_GUESSES
+
+
+    CORRECT: // Print "You win! You took # guesses."
+        ldc_w NEWLINE
         out
-        bipush 'n'
+        bipush 'Y'
+        out
+        bipush 'o'
         out
         bipush 'u'
         out
-        bipush 'm'
+        ldc_w SPACE
         out
-        bipush 'b'
+        bipush 'w'
         out
-        bipush 'e'
+        bipush 'i'
         out
-        bipush 'r'
+        bipush 'n'
+        out
+        bipush '!'
+        out
+        ldc_w SPACE
+        out
+        bipush 'Y'
+        out
+        bipush 'o'
+        out
+        bipush 'u'
         out
         ldc_w SPACE
         out
@@ -72,6 +371,20 @@
         out
         bipush 'o'
         out
+        bipush 'o'
+        out
+        bipush 'k'
+        out
+        ldc_w SPACE
+        out
+
+        bipush 5
+        iload guesses
+        isub
+        bipush 0x30
+        iadd
+        out
+
         ldc_w SPACE
         out
         bipush 'g'
@@ -84,22 +397,41 @@
         out
         bipush 's'
         out
-        bipush ':'
+        bipush 'e'
+        out
+        bipush 's'
+        out
+        bipush '.'
+        out
+        ldc_w NEWLINE
+        out
+        goto PLAY_AGAIN
+
+    LOST: // Print "Game over. Player 1 wins. Correct answer is #."
+        ldc_w NEWLINE
+        out
+        bipush 'G'
+        out
+        bipush 'a'
+        out
+        bipush 'm'
+        out
+        bipush 'e'
         out
         ldc_w SPACE
         out
-    
-    getch_1:
-        in
-        dup
-        ifeq reread_1
+        bipush 'o'
         out
-        goto player_2
-    reread_1:
-        pop
-        goto getch_1
-    
-    player_2: // Print "Player 2, guess a number: "
+        bipush 'v'
+        out
+        bipush 'e'
+        out
+        bipush 'r'
+        out
+        bipush '.'
+        out
+        ldc_w SPACE
+        out
         bipush 'P'
         out
         bipush 'l'
@@ -116,17 +448,31 @@
         out
         bipush '1'
         out
-        bipush ','
-        out
         ldc_w SPACE
+        out
+        bipush 'w'
         out
         bipush 'i'
         out
         bipush 'n'
         out
-        bipush 'p'
+        bipush 's'
         out
-        bipush 'u'
+        bipush '.'
+        out
+        ldc_w SPACE
+        out
+        bipush 'C'
+        out
+        bipush 'o'
+        out
+        bipush 'r'
+        out
+        bipush 'r'
+        out
+        bipush 'e'
+        out
+        bipush 'c'
         out
         bipush 't'
         out
@@ -134,15 +480,11 @@
         out
         bipush 'a'
         out
-        ldc_w SPACE
-        out
         bipush 'n'
         out
-        bipush 'u'
+        bipush 's'
         out
-        bipush 'm'
-        out
-        bipush 'b'
+        bipush 'w'
         out
         bipush 'e'
         out
@@ -150,21 +492,65 @@
         out
         ldc_w SPACE
         out
-        bipush 't'
+        bipush 'i'
         out
-        bipush 'o'
+        bipush 's'
         out
         ldc_w SPACE
         out
+
+        iload NUM_digit_1
+        bipush 0x30
+        iadd
+        out
+        iload NUM_digit_2
+        dup
+        bipush 10
+        isub
+        ifeq LOST_2
+        out
+
+    LOST_2:
+        bipush '.'
+        out
+        ldc_w NEWLINE
+        out
+        goto PLAY_AGAIN
+
+    PLAY_AGAIN:
+        ldc_w NEWLINE
+        out
+        bipush 'P'
+        out
+        bipush 'l'
+        out
+        bipush 'a'
+        out
+        bipush 'y'
+        out
+        ldc_w SPACE
+        out
+        bipush 'a'
+        out
         bipush 'g'
         out
-        bipush 'u'
+        bipush 'a'
         out
-        bipush 'e'
+        bipush 'i'
         out
-        bipush 's'
+        bipush 'n'
         out
-        bipush 's'
+        bipush '?'
+        out
+        bipush '('
+        out
+        bipush 'y'
+        out
+        bipush '/'
+        out
+        bipush 'n'
+        out
+        bipush ')'
         out
         bipush ':'
         out
@@ -172,6 +558,7 @@
         out
 
 
+    DONE:
         halt
 
 .end-main
