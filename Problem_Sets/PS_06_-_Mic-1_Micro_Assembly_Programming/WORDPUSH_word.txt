@@ -4,5 +4,5 @@ WORDPUSH word: Pushes an unsigned 2-byte operand to the top of the stack.
 MAIN1       PC = PC + 1; fetch; goto (MBR)
 WORDPUSH1   SP = MAR = SP + 1                   // Get byte1 to push onto stack
 WORDPUSH2   H = TOS
-WORDPUSH3   MAR = SP + 1                   // Get byte2 to push onto stack
+WORDPUSH3   MAR = SP + 1                        // Get byte2 to push onto stack
 WORDPUSH5   MDR = TOS = MDR + H; wr; goto MAIN1 // Write to top of stack
