@@ -1,0 +1,3 @@
+BLKLOAD count : Pushes a block  of local variables onto the top of stack,
+    starting with the first local variable. The number of variables for
+    be pushed is specified by the 1-byte unsigned operand.

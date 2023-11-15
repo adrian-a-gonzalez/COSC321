@@ -1,0 +1,10 @@
+IF_GE offset : Pop two words from stack and branch if the first popped word
+    is greater than or equal to the second popped word.
+
+
+MAIN1       PC = PC + 1; fetch; goto (MBR)
+IF_GE1      MDR = TOS                               // Save TOS in OPC temporarily
+IF_GE2      H = SP = SP - 1; rd                     // Get next to top of stack, place to H
+IF_GE3      MDR = TOS = MDR - H                     // Do subtraction and put TOS onto MDR
+IF_GE4      OPC = TOS                               // Save TOS in OPC temporarily
+IF_GE4      N = OPC; if (N) goto T; else goto F     // Branch on N bit

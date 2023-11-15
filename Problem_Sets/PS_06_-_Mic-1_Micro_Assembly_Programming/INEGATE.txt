@@ -1,0 +1,6 @@
+INEGATE : Pops a word from the stack and push the negated value.
+
+
+MAIN1       PC = PC + 1; fetch; goto (MBR)
+INEGATE1    H = TOS                                 // Get top of stack
+INEGATE2    MDR = TOS = Z - H; wr; goto MAIN1       // Do subtraction to negate word and write to top of stack
