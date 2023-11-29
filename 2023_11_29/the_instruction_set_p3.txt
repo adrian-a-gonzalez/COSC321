@@ -1,0 +1,35 @@
+3.) Design an expanding opcode to allow all of the following ot be encoded in a 32-bit instruction:
+
+15 instructions with two 12-bit addresses and one 4-bit register number
+
+650 instructions with one 12-bit address and one 4-bit register number
+
+80 instructions with no addresses or registers
+
+
+
+Given:  15 inst:        2 12-bit addr
+        4-bit opcode    1 4-bit reg
+
+        15 opcodes:
+                        0 0 0 0 | _ _ _ _   _ _ _ _   _ _ _ _ | _ _ _ _   _ _ _ _   _ _ _ _ | _ _ _ _
+                        1 1 1 0 | _ _ _ _   _ _ _ _   _ _ _ _ | _ _ _ _   _ _ _ _   _ _ _ _ | _ _ _ _
+                    4-bit opcode         12-bit addr 1                  12-bit addr 2         4-bit reg
+
+        
+Given:  650 inst:       1 12-bit addr
+        10-bit opcode   1 4-bit reg
+
+        650 opcodes:
+                        1 1 1 1 | 0 0 0 0   0 0 0 0   0 0|_ _   _ _ _ _   _ _ _ _   _ _|_ _   _ _|_ _
+                        1 1 1 1 | 1 0 1 0   0 0 1 0   0 1|_ _   _ _ _ _   _ _ _ _   _ _|_ _   _ _|_ _
+                        prefix           10-bit opcode              12-bit addr         4-bit reg  2-bit unused
+
+
+Given:  80 inst:        0 addr
+        7-bit opcode    0 reg
+
+        80 opcodes:
+                        1 1 1 1   1 0 1 0   0 0 1 0   1|0 0 0   0 0 0 0 | _ _ _ _   _ _ _ _   _ _ _ _
+                        1 1 1 1   1 0 1 0   0 0 1 0   1|1 0 0   1 1 1 1 | _ _ _ _   _ _ _ _   _ _ _ _
+                                        prefix            7-bit opcode            12-bit unused
