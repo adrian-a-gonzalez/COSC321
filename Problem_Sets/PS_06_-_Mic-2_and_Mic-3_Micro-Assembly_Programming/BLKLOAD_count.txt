@@ -1,0 +1,21 @@
+Mic-1 (key):
+
+Main1       PC = PC + 1; fetch; goto (MBR)
+BLKLOAD1    MAR = H = LV; rd                                                // H = pointer to local variable
+BLKLOAD2    OPC = MBRU                                                      // OPC = unsigned 1-byte operand count
+BLKLOAD3    MAR = SP = SP +1; wr                                            // MDR = local variable to push
+BLKLOAD4    MAR = H = H + 1; rd;                                            // update pointer to next variable
+BLKLOAD5    Z = OPC = OPC -1; if (Z) goto BLKLOAD6; else goto BLKLOAD3
+BLKLOAD6    PC = PC + 1 ; fetch                                             // Increment PC; Fetch next opcode
+BLKLOAD7    TOS = MDR ; goto Main1                                          // Update TOS
+
+
+Mic-2:
+
+BLKLOAD1    MAR = LV; rd
+BLKLOAD2    OPC = MBRU
+BLKLOAD3    MAR = SP = SP + 1; wr
+BLKLOAD4    MAR = LV = LV + 1; rd
+BLKLOAD5    Z = OPC = OPC - 1; if (Z) goto BLKLOAD6; else goto BLKLOAD3
+BLKLOAD6    PC = PC + 1; fetch
+BLKLOAD7    TOS = MDR; goto Main1

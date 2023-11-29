@@ -1,0 +1,11 @@
+Mic-1 (key):
+
+INEGATE1    MAR = SP
+INEGATE2    H = TOS
+INEGATE3    TOS = MDR = -H; wr; goto Main1
+
+
+Mic-2:
+
+INEGATE1    MAR = SP
+INEGATE2    TOS = MDR = -TOS; wr; goto Main1

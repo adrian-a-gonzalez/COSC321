@@ -1,0 +1,30 @@
+Mic-1 (key):
+
+IF_GE1      MAR = SP = SP-1; rd                             // Read next-to-top word on stack
+IF_GE2      OPC = TOS                                       // TOS = 1st word
+IF_GE3      MAR = SP = SP-1; rd                             // MDR = 2nd popped word
+IF_GE4      H = MDR                                         // save current MDR before it get overwritten by 2nd rd
+IF_GE5      TOS = MDR                                       // MDR = new word
+IF_GE6      N = OPC - H; if (N) goto to F else goto T;
+T           OPC = PC-1; goto GOTO2
+F           PC = PC+1
+F2          PC + 1; fetch
+F3          goto Main1
+GOTO2       PC = PC+1; fetch
+GOTO3       H = MBR << 8
+GOTO4
+
+
+Mic-2:
+
+IF_GE1      MAR = SP = SP - 1; rd
+IF_GE2      OPC = TOS
+IF_GE3      MAR = SP = SP - 1; rd
+IF_GE4      TOS = LV = MDR
+IF_GE5      N = OPC - LV; if (N) goto F1; else goto T1
+T1          OPC = PC - 1; goto GOTO1
+F1          PC = PC + 1
+F2          PC + 1; fetch; goto Main1
+GOTO1       PC = PC + 1; fetch
+GOTO2       LV = MBR << 8
+GOTO3

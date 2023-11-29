@@ -1,0 +1,16 @@
+Mic-1 (key):
+
+Main1       PC = PC + 1; fetch; goto (MBR)
+WORDPUSH1   PC = PC + 1; fetch                  // right 8 bits of operand
+WORDPUSH2   H = MBR << 8                        // MBR = 1st byte of operand
+WORDPUSH3   MDR = TOS = H OR MBRU               // MBR = 2nd byte of operand
+WORDPUSH4   PC = PC + 1; fetch                  // get opcode of next instruction
+WORDPUSH5   MAR = SP = SP+1; wr ; goto Main1    // push complete operand to top of stack
+
+
+Mic-2:
+
+WORDPUSH1   PC = PC + 1; fetch
+WORDPUSH2   MDR = TOS = MBR << 8
+WORDPUSH3   PC = PC + 1; fetch
+WORDPUSH4   MAR = SP = SP + 1; wr; goto Main1
